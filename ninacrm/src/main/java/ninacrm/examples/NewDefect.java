@@ -16,13 +16,14 @@ import com.hp.hpl.jena.rdf.model.impl.PropertyImpl;
 import com.hp.hpl.jena.vocabulary.RDF;
 
 public class NewDefect {
+	private static final String HOSTNAME="oslc";
 	
 	public static void main(String[] args) {
 	    String bug = formNewBug( // (1)
 	       "test Java post 1 2 3 4 5 6", "1.0",  "Datastore", "PC", "Windows");    
 	    try {
 	       URL createURL = new URL( // (2)
-	          "http://localhost:8282/bugz/changerequests?productId=2");         
+	          "http://" + HOSTNAME + ":8080/OSLC4JBugzilla/services/1/changeRequests");         
 	       HttpURLConnection conn = (HttpURLConnection)createURL.openConnection();
 	       conn.setRequestMethod("POST"); // (3) 
 	       conn.setDoOutput(true);

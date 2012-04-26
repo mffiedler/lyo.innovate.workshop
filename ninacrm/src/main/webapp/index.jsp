@@ -40,11 +40,11 @@ HTML display of incident
 </tr>
 <tr>
 	<td><b>Created</b></td>
-	<td>Feb. 15, 2011</td>
+	<td>Feb. 15, 2012</td>
 </tr>
 <tr>
 	<td><b>Updated</b></td>
-	<td>Feb 21, 2011</td>
+	<td>Feb 21, 2012</td>
 </tr>
 <tr>
 	<td><b>Status</b></td>
@@ -165,8 +165,8 @@ function showPreview(elem) { // (1)
       url: "http://oslc:8181/ninacrm/proxy?uri=" + previewURI,
       handleAs:"xml",
       headers: {
-         "Accept": "application/x-oslc-compact+xml" // (4) 
-      },
+         "Accept": "application/x-oslc-compact+xml", // (4) 
+      }, 
       load: function(data) {
          try {
             var previewData = parsePreview(data); // (5) 
@@ -198,8 +198,10 @@ function parsePreview(xml) { // (1)
    if (preview) {
       var document = firstChildNamed(preview, 'oslc:document');
       if (document) ret.uri = document.getAttribute('rdf:resource');
-      ret.height = firstChildNamed(preview, 'oslc:hintHeight').nodeValue;
-      ret.width = firstChildNamed(preview, 'oslc:hintWidth').nodeValue;
+      var height = firstChildNamed(preview, 'oslc:hintHeight');
+      ret.height = height.textContent;
+      var width = firstChildNamed(preview, 'oslc:hintWidth');
+      ret.width = width.textContent;
    }
    return ret;
 }
@@ -225,60 +227,52 @@ function firstChildNamed(e, nodeName) { // (4)
 Code for OSLC Delegated UI 
 */
 
-var createDialogURL = "http://oslc:8282/bugz/creator?productId=1";
-var selectDialogURL = "http://oslc:8282/bugz/selector?productId=1";
-var returnURL       = "http://oslc:8181/ninacrm/blank.html";
+var hostname ="oslc";
+var createDialogURL = "http://" + hostname + ":8080/OSLC4JBugzilla/services/1/changeRequests/creator";
+var selectDialogURL = "http:////" + hostname + ":8080/OSLC4JBugzilla/services/1/changeRequests/selector";
+var returnURL       = "http:////" + hostname + ":8181/ninacrm/blank.html";
 
 function selectDefect() {
-	windowNameProtocol(selectDialogURL);
+	postMessageProtocol(selectDialogURL);
 }
 
 function createDefect() {
-	windowNameProtocol(createDialogURL);
+	postMessageProtocol(createDialogURL);
 }
 
-var frame;
-function windowNameProtocol(dialogURL) {	
-	// Step #1: create iframe with fragment to indicate protocol 
-	// Step #2: set the iframe's window.name to indicate the Return URL 
-	var ie = window.navigator.userAgent.indexOf("MSIE");
-	if (ie > 0) {
-		frame = document.createElement('<iframe name=\'' + returnURL + '\'>');
-	} else {
-		frame = document.createElement('iframe');
-		frame.name = returnURL;
-	}
-	frame.src = dialogURL + '#oslc-core-windowName-1.0';
-	frame.width = 450;
-	frame.height = 300;
 
-	displayFrame(frame);
 
-	// Step #3: listen for onload events on the iframe
-	if (ie > 0) {
-		status("Add onload handler using attachEvent for IE");
-		frame.attachEvent("onload", onFrameLoaded);
-	} else {
-		status("Add onload handler the normal way");
-		frame.onload = onFrameLoaded;
-	}
-}
+var iframe;
+function postMessageProtocol(dialogURL) {
+    // Step 1
+    dialogURL += '#oslc-core-postMessage-1.0';
 
-function onFrameLoaded() {
-	try { // May throw an exception if the frame's location is still a different origin 
-		// Step #4: when frame's location is equal to the Return URL 
-		// then read response and return.
-		//alert(frame.contentWindow.location);
-		if (frame.contentWindow.location.toString() == returnURL) {
-			status("User made selection");
-			var message = frame.contentWindow.name;
-			destroyFrame(frame);
-			handleMessage(message);
-		} 	     
-	} catch (e) { 
-		// ignore: access exception when trying to access window name 
-	}
-}
+    // Step 2
+
+    var listener = dojo.hitch(this, function (e) {
+        var HEADER = "oslc-response:";
+        if (e.source == iframe.contentWindow && e.data.indexOf(HEADER) === 0) {
+            // Step 4
+            window.removeEventListener('message', listener, false);
+            destroyFrame(iframe);
+            handleMessage(e.data.substr(HEADER.length));
+            
+        }
+    });
+    window.addEventListener('message', listener, false);
+    
+    // Step 3
+    iframe = document.createElement('iframe');
+	iframe.width = 500;
+	iframe.height = 375;
+    iframe.src = dialogURL;
+    
+    // Display the IFrame.
+    displayFrame(iframe);
+    container.appendChild(iframe);
+};
+
+
 
 var dialog;
 function displayFrame(frame) {
@@ -301,7 +295,7 @@ function handleMessage(message) {
 	
 function addLink(linkname, linkurl) {
     dojo.xhrPost( {  
-        url: "http://oslc:8181/ninacrm/data",
+        url: "http://oslc.raleigh.ibm.com:8181/ninacrm/data",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         postData: "linkname=" + linkname + "&linkurl=" + linkurl,
         load: function(data) {

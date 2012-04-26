@@ -18,8 +18,11 @@ import javax.servlet.ServletResponse;
  * Loads sample data for Nina CRM
  */
 public class DataLoader implements Filter {
-	ServletContext context = null;
 	
+	private static final String HOSTNAME="oslc";
+	
+	ServletContext context = null;
+		
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		request.setAttribute("data", context.getAttribute("data"));
 		chain.doFilter(request, response);
@@ -29,9 +32,9 @@ public class DataLoader implements Filter {
 		context = filterConfig.getServletContext();
 		Map<URL, String> data = new HashMap<URL, String>();
 		try {
-			data.put(new URL("http://localhost:8282/bugz/changerequest%3Fid=1"), "Bug #1");
-			data.put(new URL("http://localhost:8282/bugz/changerequest%3Fid=2"), "Bug #2");
-			data.put(new URL("http://localhost:8282/bugz/changerequest%3Fid=8"), "Bug #8");
+			data.put(new URL("http://" + HOSTNAME + ":8080/OSLC4JBugzilla/services/1/changeRequests/1"), "Bug #1");
+			data.put(new URL("http://" + HOSTNAME + ":8080/OSLC4JBugzilla/services/1/changeRequests/2"), "Bug #2");
+			data.put(new URL("http://" + HOSTNAME + ":8080/OSLC4JBugzilla/services/1/changeRequests/8"), "Bug #8");
 		} catch (MalformedURLException ignored) {
 			ignored.printStackTrace();
 		}

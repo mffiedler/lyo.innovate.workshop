@@ -23,6 +23,13 @@ import javax.servlet.http.HttpServletResponse;
 @SuppressWarnings("serial")
 public class ProxyServlet extends HttpServlet {
 	
+	public static final String REALM ="Bugzilla";
+	public static final String AUTHORIZATION_HEADER = "Authorization";
+	public static final String WWW_AUTHENTICATE_HEADER = "WWW-Authenticate";
+	private static final String BASIC_AUTHORIZATION_PREFIX = "Basic ";
+	private static final String BASIC_AUTHENTICATION_CHALLENGE = BASIC_AUTHORIZATION_PREFIX
+			+ "realm=\"" + REALM + "\"";
+	
     public ProxyServlet() {}
 
 	/**
@@ -51,19 +58,29 @@ public class ProxyServlet extends HttpServlet {
 			conn.setRequestProperty(name, value);
         }
         
-        // copy response from requested URI back to response we are servicing
-	    response.setStatus(conn.getResponseCode());
+        // copy response from requested URI back to response we are servicing	    
 	    response.setContentType(conn.getContentType());
-	    response.setContentLength(conn.getContentLength());
-	    response.setCharacterEncoding(conn.getContentEncoding());
-	    Map<String, List<String>> headers = conn.getHeaderFields();
-	    for (String key : headers.keySet()) {
-	    	List<String> list = headers.get(key);
-	    	if (key != null && list.get(0) != null) { 
-	    		response.setHeader(key, list.get(0));
-	    	}
+
+        int statusCode = conn.getResponseCode();
+	    response.setStatus(statusCode);
+	    if (statusCode == HttpServletResponse.SC_FORBIDDEN)
+	    {
+			response.addHeader(WWW_AUTHENTICATE_HEADER,
+					BASIC_AUTHENTICATION_CHALLENGE);
 	    }
-        copyInputToOutput(conn.getInputStream(), response.getOutputStream());       
+	    else
+	    {	    
+	    	response.setContentLength(conn.getContentLength());
+	    	response.setCharacterEncoding(conn.getContentEncoding());
+	    	Map<String, List<String>> headers = conn.getHeaderFields();
+	    	for (String key : headers.keySet()) {
+	    		List<String> list = headers.get(key);
+	    		if (key != null && list.get(0) != null) { 
+	    			response.setHeader(key, list.get(0));
+	    		}
+	    	}
+	    	copyInputToOutput(conn.getInputStream(), response.getOutputStream()); 
+	    }
 	    response.flushBuffer();
 	}
 	
