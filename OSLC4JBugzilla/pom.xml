@@ -6,65 +6,77 @@
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-      	<dependency>
-  		<groupId>javax.servlet</groupId>
-  		<artifactId>javax.servlet-api</artifactId>
-  		<version>3.0.1</version>
-  		<scope>provided</scope>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.eclipse.lyo.oslc4j.core</groupId>
-  		<artifactId>oslc4j-core</artifactId>
-  		<version>0.1.1-SNAPSHOT</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.eclipse.lyo.oslc4j.core</groupId>
-  		<artifactId>oslc4j-wink</artifactId>
-  		<version>0.1.1-SNAPSHOT</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.eclipse.lyo.oslc4j.core</groupId>
-  		<artifactId>oslc4j-json4j-provider</artifactId>
-  		<version>0.1.1-SNAPSHOT</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.eclipse.lyo.oslc4j.core</groupId>
-  		<artifactId>oslc4j-jena-provider</artifactId>
-  		<version>0.1.1-SNAPSHOT</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>com.j2bugzilla</groupId>
-  		<artifactId>j2bugzilla</artifactId>
-  		<version>2.0</version>
-	</dependency>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.lyo.oslc4j.core</groupId>
+			<artifactId>oslc4j-core</artifactId>
+			<version>0.1.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.lyo.oslc4j.core</groupId>
+			<artifactId>oslc4j-wink</artifactId>
+			<version>0.1.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.lyo.oslc4j.core</groupId>
+			<artifactId>oslc4j-json4j-provider</artifactId>
+			<version>0.1.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.lyo.oslc4j.core</groupId>
+			<artifactId>oslc4j-jena-provider</artifactId>
+			<version>0.1.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.j2bugzilla</groupId>
+			<artifactId>j2bugzilla</artifactId>
+			<version>2.0</version>
+		</dependency>
 
-	
-	<dependency>
-		<groupId>org.eclipse.lyo.server</groupId>
-		<artifactId>oauth-webapp</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-		<type>war</type>
-	</dependency>
-		
-	<dependency>
-		<groupId>org.eclipse.lyo.server</groupId>
-		<artifactId>oauth-core</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</dependency>
-		
-	<dependency>
-		<groupId>org.eclipse.lyo.server</groupId>
-		<artifactId>oauth-consumer-store</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</dependency>
-  </dependencies>
+
+		<dependency>
+			<groupId>org.eclipse.lyo.server</groupId>
+			<artifactId>oauth-webapp</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>war</type>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.lyo.server</groupId>
+			<artifactId>oauth-core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.lyo.server</groupId>
+			<artifactId>oauth-consumer-store</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.1.2</version>
+		</dependency>
+	</dependencies>
+  
   <build>
     <finalName>oslc4j-bugzilla-sample</finalName>
       	<plugins>
