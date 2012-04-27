@@ -40,8 +40,7 @@ import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 public class Person extends AbstractResource {
 	private URI uri = null;
 	private String name = null;
-	//@RdfProperty("http://xmlns.com/foaf/0.1/mbox")
-	private String email = null;
+	private String mbox = null;
 
     
 	public URI getUri() {
@@ -67,11 +66,11 @@ public class Person extends AbstractResource {
     @OslcPropertyDefinition(Constants.FOAF_NAMESPACE + "mbox")
     @OslcReadOnly
     @OslcTitle("Email Address")
-	public String getEmail() {
-		return email;
+	public String getMbox() {
+		return mbox;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setMbox(String mbox) {
+		this.mbox = mbox;
 	}
 }

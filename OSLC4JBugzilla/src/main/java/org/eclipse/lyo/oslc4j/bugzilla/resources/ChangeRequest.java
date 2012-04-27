@@ -20,9 +20,11 @@ package org.eclipse.lyo.oslc4j.bugzilla.resources;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -34,12 +36,14 @@ import org.eclipse.lyo.oslc4j.core.annotation.OslcOccurs;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcPropertyDefinition;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcRange;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcReadOnly;
+import org.eclipse.lyo.oslc4j.core.annotation.OslcRepresentation;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcTitle;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcValueType;
 import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 import org.eclipse.lyo.oslc4j.core.model.Link;
 import org.eclipse.lyo.oslc4j.core.model.Occurs;
 import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
+import org.eclipse.lyo.oslc4j.core.model.Representation;
 import org.eclipse.lyo.oslc4j.core.model.ValueType;
 
 public class ChangeRequest
@@ -50,8 +54,8 @@ public class ChangeRequest
     private final Set<Link>     affectsRequirements         = new HashSet<Link>();
     private final Set<Link>     affectsTestResults          = new HashSet<Link>();
     private final Set<Link>     blocksTestExecutionRecords  = new HashSet<Link>();
-    private final Set<URI>      contributors                = new TreeSet<URI>();
-    private final Set<URI>      creators                    = new TreeSet<URI>();
+    private final List<Person>   contributors                = new ArrayList<Person>();
+    private final List<Person>   creators                    = new ArrayList<Person>();
     private final Set<Type>     dctermsTypes                = new TreeSet<Type>();
     private final Set<Link>     implementsRequirements      = new HashSet<Link>();
     private final Set<Link>     relatedChangeRequests       = new HashSet<Link>();
@@ -126,12 +130,12 @@ public class ChangeRequest
         this.blocksTestExecutionRecords.add(blocksTestExecutionRecord);
     }
 
-    public void addContributor(final URI contributor)
+    public void addContributor(final Person contributor)
     {
         this.contributors.add(contributor);
     }
 
-    public void addCreator(final URI creator)
+    public void addCreator(final Person creator)
     {
         this.creators.add(creator);
     }
@@ -268,11 +272,13 @@ public class ChangeRequest
     @OslcDescription("The person(s) who are responsible for the work needed to complete the change request.")
     @OslcName("contributor")
     @OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "contributor")
+    @OslcRepresentation(Representation.Inline)
+    @OslcValueType(ValueType.LocalResource)
     @OslcRange(Constants.TYPE_PERSON)
     @OslcTitle("Contributors")
-    public URI[] getContributors()
+    public List<Person> getContributors()
     {
-        return contributors.toArray(new URI[contributors.size()]);
+        return contributors;
     }
 
     @OslcDescription("Timestamp of resource creation.")
@@ -287,11 +293,13 @@ public class ChangeRequest
     @OslcDescription("Creator or creators of resource.")
     @OslcName("creator")
     @OslcPropertyDefinition(OslcConstants.DCTERMS_NAMESPACE + "creator")
+    @OslcRepresentation(Representation.Inline)
+    @OslcValueType(ValueType.LocalResource)
     @OslcRange(Constants.TYPE_PERSON)
     @OslcTitle("Creators")
-    public URI[] getCreators()
+    public List<Person> getCreators()
     {
-        return creators.toArray(new URI[creators.size()]);
+        return creators;
     }
 
     @OslcAllowedValue({"Defect", "Task", "Story", "Bug Report", "Feature Request"})
@@ -652,13 +660,13 @@ public class ChangeRequest
         this.closeDate = closeDate;
     }
 
-    public void setContributors(final URI[] contributors)
+    public void setContributors(final List<Person> contributors)
     {
         this.contributors.clear();
 
         if (contributors != null)
         {
-            this.contributors.addAll(Arrays.asList(contributors));
+            this.contributors.addAll(contributors);
         }
     }
 
@@ -667,13 +675,13 @@ public class ChangeRequest
         this.created = created;
     }
 
-    public void setCreators(final URI[] creators)
+    public void setCreators(final List<Person> creators)
     {
         this.creators.clear();
 
         if (creators != null)
         {
-            this.creators.addAll(Arrays.asList(creators));
+            this.creators.addAll(creators);
         }
     }
 

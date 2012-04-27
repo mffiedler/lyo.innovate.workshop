@@ -27,6 +27,7 @@ import java.util.Set;
 
 import org.eclipse.lyo.oslc4j.application.OslcWinkApplication;
 import org.eclipse.lyo.oslc4j.bugzilla.resources.BugzillaChangeRequest;
+import org.eclipse.lyo.oslc4j.bugzilla.resources.Person;
 import org.eclipse.lyo.oslc4j.bugzilla.Constants;
 import org.eclipse.lyo.oslc4j.bugzilla.services.BugzillaChangeRequestService;
 import org.eclipse.lyo.oslc4j.core.exception.OslcCoreApplicationException;
@@ -62,11 +63,12 @@ public class BugzillaApplication extends OslcWinkApplication {
     		RESOURCE_CLASSES.addAll(JenaProvidersRegistry.getProviders());
     		RESOURCE_CLASSES.addAll(Json4JProvidersRegistry.getProviders());
     		RESOURCE_CLASSES.add(BugzillaChangeRequestService.class);
+    		RESOURCE_CLASSES.add(Person.class);
     		
     		RESOURCE_CLASSES.add(Class.forName("org.eclipse.lyo.server.oauth.webapp.services.ConsumersService"));
     		RESOURCE_CLASSES.add(Class.forName("org.eclipse.lyo.server.oauth.webapp.services.OAuthService"));
     		
-    		//Catalog resources.   TODO: All shapes likely not necessary  
+    		//Catalog resources.   
     		
             RESOURCE_CLASSES.add(ServiceProviderCatalogResource.class);
             RESOURCE_CLASSES.add(ServiceProviderResource.class);
@@ -94,6 +96,7 @@ public class BugzillaApplication extends OslcWinkApplication {
     	}
 
         RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(Constants.PATH_CHANGE_REQUEST, BugzillaChangeRequest.class);
+        
     }
 
     public BugzillaApplication()

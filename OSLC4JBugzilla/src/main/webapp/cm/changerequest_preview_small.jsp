@@ -18,6 +18,7 @@
 <%@ page contentType="text/html" language="java" pageEncoding="UTF-8" %>
 <%@ page import="java.net.*,java.util.*,java.text.SimpleDateFormat" %>
 <%@ page import="org.eclipse.lyo.oslc4j.bugzilla.resources.BugzillaChangeRequest" %>
+<%@ page import="org.eclipse.lyo.oslc4j.bugzilla.resources.Person" %>
 
 
 <%
@@ -30,13 +31,10 @@ String created = formatter.format(createdDate);
 Date modifiedDate = (Date) changeRequest.getModified();
 String modified = formatter.format(modifiedDate);
 
-String assigneeUri = changeRequest.getContributors()[0].toString();
-String [] assigneeSplit = assigneeUri.split("mbox=");
-String assignee = null;
-if (assigneeSplit.length == 2)
-	assignee = assigneeSplit[1];
-else
-	assignee = assigneeUri;
+Person assigneePerson = (Person) changeRequest.getContributors().get(0);
+String assignee = "Unknown";
+if (assigneePerson != null)
+	assignee = assigneePerson.getMbox();
 %>
 <html>
 <head>

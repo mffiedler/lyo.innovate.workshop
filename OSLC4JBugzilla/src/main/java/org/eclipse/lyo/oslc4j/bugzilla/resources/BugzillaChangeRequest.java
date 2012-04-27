@@ -22,6 +22,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
@@ -88,9 +89,11 @@ public final class BugzillaChangeRequest
 			String email = assignedTo.toString();
 			Person contributor = new Person();
 			contributor.setUri(new URI(BugzillaManager.getServletBase() + "/person?mbox=" + URLEncoder.encode(email, "UTF-8")));
-			contributor.setEmail(email);
+			contributor.setMbox(email);
 			contributor.setAbout(contributor.getUri());
-			cr.setContributors(new URI [] {contributor.getUri()});
+			ArrayList<Person> contributors = new ArrayList<Person>();
+			contributors.add(contributor);
+			cr.setContributors(contributors);
 		}
 		
 		Date createdDate = (Date) bug.getParameterMap().get("creation_time");

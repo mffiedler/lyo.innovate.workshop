@@ -19,6 +19,7 @@
 <%@ page import="java.net.*,java.util.*" %>
 <%@ page import="java.net.*,java.util.*,java.text.SimpleDateFormat" %>
 <%@ page import="org.eclipse.lyo.oslc4j.bugzilla.resources.BugzillaChangeRequest" %>
+<%@ page import="org.eclipse.lyo.oslc4j.bugzilla.resources.Person" %>
 <%
 BugzillaChangeRequest changeRequest = (BugzillaChangeRequest)request.getAttribute("changeRequest");
 String bugzillaUri = (String) request.getAttribute("bugzillaUri");
@@ -33,7 +34,10 @@ String modified = formatter.format(modifiedDate);
 String component = changeRequest.getComponent();
 String identifier = changeRequest.getIdentifier()+""; 
 String description = changeRequest.getDescription();
-String assignee = (String) changeRequest.getContributors()[0].toString();
+Person assigneePerson = (Person) changeRequest.getContributors().get(0);
+String assignee = "Unknown";
+if (assigneePerson != null)
+	assignee = assigneePerson.getMbox();
 %>
 <html>
 <head>
