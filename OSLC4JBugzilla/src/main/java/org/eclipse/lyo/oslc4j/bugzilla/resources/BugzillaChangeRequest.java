@@ -65,109 +65,7 @@ public final class BugzillaChangeRequest
 	private String priority = null;
 	private String platform = null;
 	private String operatingSystem = null;
-	
-	/**
-	 * Converts a {@link Bug} to an OSLC-CM BugzillaChangeRequest.
-	 * 
-	 * @param bug
-	 *            the bug
-	 * @return the ChangeRequest to be serialized
-	 * @throws URISyntaxException
-	 *             on errors setting the bug URI
-	 * @throws UnsupportedEncodingException
-	 */
-	public static BugzillaChangeRequest fromBug(Bug bug)
-			throws URISyntaxException, UnsupportedEncodingException {
-		BugzillaChangeRequest cr = new BugzillaChangeRequest();
-		cr.setIdentifier(bug.getID());
-		cr.setTitle(bug.getSummary());
-		cr.setStatus(bug.getStatus());
 
-		//Map contributor to the person this bug is assigned to
-		Object assignedTo = bug.getParameterMap().get("assigned_to");
-		if (assignedTo != null) {
-			String email = assignedTo.toString();
-			Person contributor = new Person();
-			contributor.setUri(new URI(BugzillaManager.getServletBase() + "/person?mbox=" + URLEncoder.encode(email, "UTF-8")));
-			contributor.setMbox(email);
-			contributor.setAbout(contributor.getUri());
-			ArrayList<Person> contributors = new ArrayList<Person>();
-			contributors.add(contributor);
-			cr.setContributors(contributors);
-		}
-		
-		Date createdDate = (Date) bug.getParameterMap().get("creation_time");
-		cr.setCreated(createdDate);
-		
-		Date modifiedDate = (Date) bug.getParameterMap().get("last_change_time");
-		cr.setModified(modifiedDate);
-		
-		cr.setProduct(bug.getProduct());
-		cr.setComponent(bug.getComponent());
-		
-		// Work around a bug in j2bugzilla. Bug.getVersion() results in a class cast exception.
-		Object version = bug.getParameterMap().get("version");
-		if (version != null) {
-			cr.setVersion(version.toString());
-		}
-		
-		cr.setPriority(bug.getPriority());
-		
-		Map<?, ?> internals = bug.getParameterMap();
-		cr.setPlatform((String) internals.get("platform"));
-		cr.setOperatingSystem((String) internals.get("op_sys"));
-		
-		return cr;
-	}
-	
-	/**
-	 * Creates a {@link Bug} from an OSLC-CM ChangeRequest.
-	 * 
-	 * @param bug the bug
-	 * @return the ChangeRequest to be serialized
-	 * @throws BugzillaException 
-	 * @throws ConnectionException 
-	 * @throws InvalidDescriptionException 
-	 * @throws URISyntaxException on errors setting the bug URI
-	 */
-	public Bug toBug() throws ConnectionException, BugzillaException {
-		BugFactory factory = new BugFactory().newBug();
-		if (product != null) {
-			factory.setProduct(product);
-		}
-		if (this.getTitle() != null) {
-			factory.setSummary(this.getTitle());
-		}
-		if (this.getDescription() != null) {
-			factory.setDescription(this.getDescription());
-		}
-		if (version != null) {
-			factory.setVersion(version);
-		}
-		if (component != null) {
-			factory.setComponent(component);
-		}
-		if (platform != null) {
-			factory.setPlatform(platform);
-		}
-		if (operatingSystem != null) {
-			factory.setOperatingSystem(operatingSystem);
-		}
-		
-		return factory.createBug();
-	}
-	
-	public void setIdentifier(int identifier) throws URISyntaxException {
-		setIdentifier(Integer.toString(identifier));
-	}
-	
-	public String getProduct() {
-		return product;
-	}
-	
-	public void setProduct(String product) {
-		this.product = product;
-	}
 	
 	@OslcDescription("The Bugzilla product definition for this change request.")
     @OslcOccurs(Occurs.ZeroOrOne)
@@ -228,5 +126,109 @@ public final class BugzillaChangeRequest
 	
 	public void setOperatingSystem(String operatingSystem) {
 		this.operatingSystem = operatingSystem;
+	}
+	
+	
+	/**
+	 * Converts a {@link Bug} to an OSLC-CM BugzillaChangeRequest.
+	 * 
+	 * @param bug
+	 *            the bug
+	 * @return the ChangeRequest to be serialized
+	 * @throws URISyntaxException
+	 *             on errors setting the bug URI
+	 * @throws UnsupportedEncodingException
+	 */
+	public static BugzillaChangeRequest fromBug(Bug bug)
+			throws URISyntaxException, UnsupportedEncodingException {
+		BugzillaChangeRequest changeRequest = new BugzillaChangeRequest();
+		changeRequest.setIdentifier(bug.getID());
+		changeRequest.setTitle(bug.getSummary());
+		changeRequest.setStatus(bug.getStatus());
+
+		//Map contributor to the person this bug is assigned to
+		Object assignedTo = bug.getParameterMap().get("assigned_to");
+		if (assignedTo != null) {
+			String email = assignedTo.toString();
+			Person contributor = new Person();
+			contributor.setUri(new URI(BugzillaManager.getServletBase() + "/person?mbox=" + URLEncoder.encode(email, "UTF-8")));
+			contributor.setMbox(email);
+			contributor.setAbout(contributor.getUri());
+			ArrayList<Person> contributors = new ArrayList<Person>();
+			contributors.add(contributor);
+			changeRequest.setContributors(contributors);
+		}
+		
+		Date createdDate = (Date) bug.getParameterMap().get("creation_time");
+		changeRequest.setCreated(createdDate);
+		
+		Date modifiedDate = (Date) bug.getParameterMap().get("last_change_time");
+		changeRequest.setModified(modifiedDate);
+		
+		changeRequest.setProduct(bug.getProduct());
+		changeRequest.setComponent(bug.getComponent());
+		
+		// Work around a bug in j2bugzilla. Bug.getVersion() results in a class cast exception.
+		Object version = bug.getParameterMap().get("version");
+		if (version != null) {
+			changeRequest.setVersion(version.toString());
+		}
+		
+		changeRequest.setPriority(bug.getPriority());
+		
+		Map<?, ?> internals = bug.getParameterMap();
+		changeRequest.setPlatform((String) internals.get("platform"));
+		changeRequest.setOperatingSystem((String) internals.get("op_sys"));
+		
+		return changeRequest;
+	}
+	
+	/**
+	 * Creates a {@link Bug} from an OSLC-CM ChangeRequest.
+	 * 
+	 * @param bug the bug
+	 * @return the ChangeRequest to be serialized
+	 * @throws BugzillaException 
+	 * @throws ConnectionException 
+	 * @throws InvalidDescriptionException 
+	 * @throws URISyntaxException on errors setting the bug URI
+	 */
+	public Bug toBug() throws ConnectionException, BugzillaException {
+		BugFactory factory = new BugFactory().newBug();
+		if (product != null) {
+			factory.setProduct(product);
+		}
+		if (this.getTitle() != null) {
+			factory.setSummary(this.getTitle());
+		}
+		if (this.getDescription() != null) {
+			factory.setDescription(this.getDescription());
+		}
+		if (version != null) {
+			factory.setVersion(version);
+		}
+		if (component != null) {
+			factory.setComponent(component);
+		}
+		if (platform != null) {
+			factory.setPlatform(platform);
+		}
+		if (operatingSystem != null) {
+			factory.setOperatingSystem(operatingSystem);
+		}
+		
+		return factory.createBug();
+	}
+	
+	public void setIdentifier(int identifier) throws URISyntaxException {
+		setIdentifier(Integer.toString(identifier));
+	}
+	
+	public String getProduct() {
+		return product;
+	}
+	
+	public void setProduct(String product) {
+		this.product = product;
 	}
 }

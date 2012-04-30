@@ -92,8 +92,9 @@ public class ServiceProviderCatalogResource
         return Response.seeOther(new URI(forwardUri)).build();
     }
 
+
     /**
-     * Return the catalog singleton as RDF/XML, XML or JSON
+     * Return the OSLC service provider catalog as RDF/XML, XML or JSON
      * 
      * @return
      */

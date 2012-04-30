@@ -16,13 +16,38 @@
     Michael Fiedler	 - adapted for OSLC4J
 --%>
 <%@ page contentType="text/html" language="java" pageEncoding="UTF-8" %>
+<%@ page import="java.net.URI" %>
 <%@ page import="org.eclipse.lyo.oslc4j.core.model.Service" %>
 <%@ page import="org.eclipse.lyo.oslc4j.core.model.ServiceProvider" %>
+<%@ page import="org.eclipse.lyo.oslc4j.core.model.Dialog" %>
+<%@ page import="org.eclipse.lyo.oslc4j.core.model.CreationFactory" %>
+<%@ page import="org.eclipse.lyo.oslc4j.core.model.ResourceShape" %>
+<%@ page import="org.eclipse.lyo.oslc4j.core.model.QueryCapability" %>
+
 
 <%
 String bugzillaUri = (String) request.getAttribute("bugzillaUri");
 Service service = (Service)request.getAttribute("service");
 ServiceProvider serviceProvider = (ServiceProvider)request.getAttribute("serviceProvider");
+
+//OSLC Dialogs
+Dialog [] selectionDialogs = service.getSelectionDialogs();
+String selectionDialog = selectionDialogs[0].getDialog().toString();
+Dialog [] creationDialogs = service.getCreationDialogs();
+String creationDialog = creationDialogs[0].toString();
+
+//OSLC CreationFactory and shape
+CreationFactory [] creationFactories = service.getCreationFactories();
+String creationFactory = creationFactories[0].getCreation().toString();
+URI[] creationShapes = creationFactories[0].getResourceShapes();
+String creationShape = creationShapes[0].toString();
+
+//OSLC QueryCapability and shape
+QueryCapability [] queryCapabilities= service.getQueryCapabilities();
+String queryCapability = queryCapabilities[0].getQueryBase().toString();
+String queryShape = queryCapabilities[0].getResourceShape().toString();
+
+
 %>
 <html>
 	<head>
@@ -86,27 +111,26 @@ ServiceProvider serviceProvider = (ServiceProvider)request.getAttribute("service
 			            <td>org.eclipse.lyo.oslc4j.bugzilla.test</td>
 		            </tr>
 	            </table>
-            								
+						
 				<h2>OSLC-CM Resource Selector Dialog</h2>
-				<p><a href="<%= service.getSelectionDialogs()[0].getDialog().toString() %>">
-				            <%= service.getSelectionDialogs()[0].getDialog().toString() %></a></p>
+				<p><a href="<%= selectionDialog %>">
+				            <%= selectionDialog %></a></p>
 				
 				<h2>OSLC-CM Resource Creator Dialog</h2>
-				<p><a href="<%= service.getCreationDialogs()[0].getDialog().toString() %>">
-				            <%= service.getCreationDialogs()[0].getDialog().toString() %></a></p>
+				<p><a href="<%= creationDialog %>">
+				            <%= creationDialog %></a></p>
 			
 				<h2>OSLC-CM Resource Creation Factory and Resource Shape</h2>
-				<p><a href="<%= service.getCreationFactories()[0].getCreation().toString() %>">
-				<%= service.getCreationFactories()[0].getCreation().toString() %></a></p>
-				<p><a href="<%= service.getCreationFactories()[0].getResourceShapes()[0].toString() %>">
-				            <%= service.getCreationFactories()[0].getResourceShapes()[0].toString() %></a></p>
+				<p><a href="<%= creationFactory %>">
+				            <%= creationFactory %></a></p>
+				<p><a href="<%= creationShape %>">
+				            <%= creationShape %></a></p>
 				
 				<h2>OSLC-CM Resource Query Capability and Resource Shape</h2>
-				<p><a href="<%= service.getQueryCapabilities()[0].getQueryBase().toString() %>">
-				<%= service.getQueryCapabilities()[0].getQueryBase().toString() %></a></p>
-				<p><a href="<%= service.getQueryCapabilities()[0].getResourceShape().toString() %>">
-				            <%= service.getQueryCapabilities()[0].getResourceShape().toString() %></a></p>
-			
+				<p><a href="<%= queryCapability %>">
+				            <%= queryCapability %></a></p>
+				<p><a href="<%= queryShape %>">
+				            <%= queryShape %></a></p>
 			</div>
 		</div>
 		
