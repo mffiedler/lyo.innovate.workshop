@@ -51,7 +51,7 @@
     <form id="Create" method="POST" class="enter_bug_form">
 	<input name="product" type="hidden" value="<%=product.getName()%>" />
 
-<%-- Uncomment to add code for generating the creation form.  Add Summary, Component, Version, OperatingSystem, Platform and Description
+<%-- LAB 3 Uncomment to add code for generating the creation form.  Add Summary, Component, Version, OperatingSystem, Platform and Description
      Call bugzilla.js create() with the completed form data - go to bugzilla.js to complete the create() code.
      
 			<table style="clear: both;">
