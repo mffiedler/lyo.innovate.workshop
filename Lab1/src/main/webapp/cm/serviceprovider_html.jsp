@@ -39,7 +39,7 @@ ServiceProvider serviceProvider = (ServiceProvider)request.getAttribute("service
 Dialog [] selectionDialogs = service.getSelectionDialogs();
 String selectionDialog = selectionDialogs[0].getDialog().toString();
 Dialog [] creationDialogs = service.getCreationDialogs();
-String creationDialog = creationDialogs[0].toString();
+String creationDialog = creationDialogs[0].getDialog().toString();
 
 //OSLC CreationFactory and shape
 CreationFactory [] creationFactories = service.getCreationFactories();

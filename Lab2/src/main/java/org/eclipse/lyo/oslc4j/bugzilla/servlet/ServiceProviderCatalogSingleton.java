@@ -34,13 +34,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response.Status;
 
+import org.eclipse.lyo.oslc4j.bugzilla.BugzillaManager;
 import org.eclipse.lyo.oslc4j.bugzilla.jbugzx.rpc.GetAccessibleProducts;
 import org.eclipse.lyo.oslc4j.client.ServiceProviderRegistryURIs;
 import org.eclipse.lyo.oslc4j.core.model.Publisher;
 import org.eclipse.lyo.oslc4j.core.model.Service;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
-import org.eclipse.lyo.oslc4j.bugzilla.BugzillaManager;
 
 import com.j2bugzilla.base.BugzillaConnector;
 import com.j2bugzilla.rpc.GetProduct;
@@ -257,8 +257,7 @@ public class ServiceProviderCatalogSingleton
     	
       	
 		try {
-		/* LAB 1 - Uncomment this method which creates OSLC ServiceProviders for each Product in Bugzilla
-		 * 
+
 			BugzillaConnector bc = BugzillaManager.getBugzillaConnector(httpServletRequest);
 
 			GetAccessibleProducts getProductIds = new GetAccessibleProducts();
@@ -283,8 +282,7 @@ public class ServiceProviderCatalogSingleton
 		        	final ServiceProvider bugzillaServiceProvider = BugzillaServiceProviderFactory.createServiceProvider(basePath, product, parameterMap);
 		            registerServiceProvider(basePath,bugzillaServiceProvider,productId);
 	        	}
-	         }
-		*/
+	        }
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new WebApplicationException(e,Status.INTERNAL_SERVER_ERROR);

@@ -24,7 +24,6 @@
 <%@ page import="org.eclipse.lyo.oslc4j.core.model.ResourceShape" %>
 <%@ page import="org.eclipse.lyo.oslc4j.core.model.QueryCapability" %>
 
-
 <%
 String bugzillaUri = (String) request.getAttribute("bugzillaUri");
 Service service = (Service)request.getAttribute("service");
@@ -47,8 +46,10 @@ QueryCapability [] queryCapabilities= service.getQueryCapabilities();
 String queryCapability = queryCapabilities[0].getQueryBase().toString();
 String queryShape = queryCapabilities[0].getResourceShape().toString();
 
-
 %>
+
+
+
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
@@ -111,7 +112,7 @@ String queryShape = queryCapabilities[0].getResourceShape().toString();
 			            <td>org.eclipse.lyo.oslc4j.bugzilla.test</td>
 		            </tr>
 	            </table>
-						
+	                       								
 				<h2>OSLC-CM Resource Selector Dialog</h2>
 				<p><a href="<%= selectionDialog %>">
 				            <%= selectionDialog %></a></p>
@@ -131,6 +132,7 @@ String queryShape = queryCapabilities[0].getResourceShape().toString();
 				            <%= queryCapability %></a></p>
 				<p><a href="<%= queryShape %>">
 				            <%= queryShape %></a></p>
+				            
 			</div>
 		</div>
 		
