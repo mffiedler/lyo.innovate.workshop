@@ -553,9 +553,6 @@ public class BugzillaChangeRequestService
                                                              final BugzillaChangeRequest changeRequest) throws IOException, ServletException
 
     {
-    	
-    	/* LAB 5 - Uncomment this code which creates a BugzillaChangeRequest from a POSTed RDF/XML, XML or JSON representation
-
     	//Create a new Bug from the incoming change request, retrieve the bug and then convert to a BugzillaChangeRequest
         final String newBugId = BugzillaManager.createBug(httpServletRequest, changeRequest, productId);     
         final Bug newBug = BugzillaManager.getBugById(httpServletRequest, newBugId);
@@ -573,9 +570,7 @@ public class BugzillaChangeRequestService
         setETagHeader(getETagFromChangeRequest(newChangeRequest), httpServletResponse);
 
         return Response.created(about).entity(changeRequest).build();
-        
-        */
-    	return null; //LAB 5 - remove this line
+
     }
 
     /**
@@ -591,9 +586,6 @@ public class BugzillaChangeRequestService
      * @throws IOException
      * @throws ServletException
      */
-    
-    /* LAB 5 - Uncomment this method which allows the update of a BugzillaChangeRequest with links
-     
     @PUT
     @Consumes({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON})
     @Path("{changeRequestId}")
@@ -631,8 +623,6 @@ public class BugzillaChangeRequestService
 
         return Response.ok().build();
     }
-    */
-
 
 
     private static void setETagHeader(final String              eTagFromChangeRequest,
