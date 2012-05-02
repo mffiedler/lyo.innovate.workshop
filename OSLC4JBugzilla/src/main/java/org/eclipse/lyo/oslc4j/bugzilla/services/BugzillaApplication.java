@@ -70,8 +70,8 @@ public class BugzillaApplication extends OslcWinkApplication {
     		
     		//Catalog resources.   
     		
-            RESOURCE_CLASSES.add(ServiceProviderCatalogResource.class);
-            RESOURCE_CLASSES.add(ServiceProviderResource.class);
+            RESOURCE_CLASSES.add(ServiceProviderCatalogService.class);
+            RESOURCE_CLASSES.add(ServiceProviderService.class);
 
             RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_ALLOWED_VALUES,           AllowedValues.class);
             RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_COMPACT,                  Compact.class);

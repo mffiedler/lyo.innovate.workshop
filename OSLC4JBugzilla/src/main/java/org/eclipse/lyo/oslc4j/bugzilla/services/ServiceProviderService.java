@@ -47,7 +47,7 @@ import org.eclipse.lyo.oslc4j.bugzilla.servlet.ServiceProviderCatalogSingleton;
 
 @OslcService(OslcConstants.OSLC_CORE_DOMAIN)
 @Path("serviceProviders")
-public class ServiceProviderResource
+public class ServiceProviderService
 {
 	@Context private HttpServletRequest httpServletRequest;
 	@Context private HttpServletResponse httpServletResponse;

@@ -50,7 +50,7 @@ import org.eclipse.lyo.oslc4j.bugzilla.servlet.ServiceProviderCatalogSingleton;
 
 @OslcService(OslcConstants.OSLC_CORE_DOMAIN)
 @Path("catalog")
-public class ServiceProviderCatalogResource
+public class ServiceProviderCatalogService
 {
 	@Context private HttpServletRequest httpServletRequest;
 	@Context private HttpServletResponse httpServletResponse;
