@@ -20,12 +20,6 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>javax.servlet.jsp-api</artifactId>
-			<version>2.2.1</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.eclipse.lyo.oslc4j.core</groupId>
 			<artifactId>oslc4j-core</artifactId>
 			<version>0.1.1-SNAPSHOT</version>
@@ -38,6 +32,11 @@
 		<dependency>
 			<groupId>org.eclipse.lyo.oslc4j.core</groupId>
 			<artifactId>oslc4j-json4j-provider</artifactId>
+			<version>0.1.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.lyo.oslc4j.core</groupId>
+			<artifactId>oslc4j-jena-provider</artifactId>
 			<version>0.1.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
@@ -77,66 +76,58 @@
 			<version>1.1.2</version>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.lyo.oslc4j.core</groupId>
-			<artifactId>oslc4j-jena-provider</artifactId>
-			<version>0.1.1-SNAPSHOT</version>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>2.2.1</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
+  
+  <build>
+    <finalName>oslc4j-bugzilla-sample</finalName>
+      	<plugins>
 
-	<build>
-		<finalName>oslc4j-bugzilla-sample</finalName>
-		<resources>
-			<resource>
-				<directory>src/test/launchess</directory>
-				<excludes>
-					<exclude>*.launch</exclude>
-				</excludes>
-				<filtering>false</filtering>
-			</resource>
-		</resources>
-		<plugins>
+		<!-- Jetty 7 plugin See also: http://wiki.eclipse.org/Jetty/Feature/Jetty_Maven_Plugin -->
+		<plugin>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty-maven-plugin</artifactId>
+			<!--  <version>7.3.0.v20110203</version> -->
 
-			<!-- Jetty 7 plugin See also: http://wiki.eclipse.org/Jetty/Feature/Jetty_Maven_Plugin -->
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<!-- <version>7.3.0.v20110203</version> -->
+			<configuration>
+			    <webAppConfig>
+			      <contextPath>/OSLC4JBugzilla</contextPath>
+			    </webAppConfig>
 
-				<configuration>
-					<webAppConfig>
-						<contextPath>/OSLC4JBugzilla</contextPath>
-					</webAppConfig>
+				<!-- Jetty config adds logging -->
+				<jettyConfig>${project.build.directory}/classes/jetty.xml</jettyConfig>
 
-					<!-- Jetty config adds logging -->
-					<jettyConfig>${project.build.directory}/classes/jetty.xml</jettyConfig>
+				<!-- enable hot deploy -->
+				<reload>automatic</reload>
+				<scanIntervalSeconds>5</scanIntervalSeconds>
+				<scanTargets>
+					<scanTarget>WebContent</scanTarget>
+				</scanTargets>
+					
+    			<systemProperties>
 
-					<!-- enable hot deploy -->
-					<reload>automatic</reload>
-					<scanIntervalSeconds>5</scanIntervalSeconds>
-					<scanTargets>
-						<scanTarget>WebContent</scanTarget>
-					</scanTargets>
+					<systemProperty>
+						<name>config.dir</name>
+						<value>${basedir}/src/test/resources</value>
+					</systemProperty>
 
-					<systemProperties>
+					<systemProperty>
+						<name>jetty.logs</name>
+						<value>${basedir}/target</value>
+					</systemProperty>
+					<systemProperty>
+						<name>jetty.port</name>
+						<value>8080</value>
+					</systemProperty>
+				</systemProperties>
+					
+			</configuration>
 
-						<systemProperty>
-							<name>config.dir</name>
-							<value>${basedir}/src/test/resources</value>
-						</systemProperty>
-
-						<systemProperty>
-							<name>jetty.logs</name>
-							<value>${basedir}/target</value>
-						</systemProperty>
-						<systemProperty>
-							<name>jetty.port</name>
-							<value>8080</value>
-						</systemProperty>
-					</systemProperties>
-
-				</configuration>
-
-			</plugin>
-		</plugins>
-	</build>
+		</plugin>
+  	</plugins>
+  </build>
 </project>
