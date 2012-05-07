@@ -63,7 +63,7 @@ public class ProxyServlet extends HttpServlet {
 
         int statusCode = conn.getResponseCode();
 	    response.setStatus(statusCode);
-	    if (statusCode == HttpServletResponse.SC_FORBIDDEN)
+	    if (statusCode == HttpServletResponse.SC_FORBIDDEN || statusCode == HttpServletResponse.SC_UNAUTHORIZED)
 	    {
 			response.addHeader(WWW_AUTHENTICATE_HEADER,
 					BASIC_AUTHENTICATION_CHALLENGE);
