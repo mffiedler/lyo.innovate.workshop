@@ -59,7 +59,7 @@ ServiceProviderCatalog catalog = (ServiceProviderCatalog)request.getAttribute("c
 		<div id="bugzilla-body">
 			<div id="page-index">
 			
-			<img src="..\..\images\resources\bugzilla.gif" alt="icon" width="80" height="80" />
+			<img src="../../images/resources/bugzilla.gif" alt="icon" width="80" height="80" />
 			
 			<h1>Service Provider Catalog</h1>
 			
