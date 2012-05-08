@@ -469,6 +469,13 @@ public class BugzillaChangeRequestService
             smallPreview.setHintWidth("45em");
             smallPreview.setDocument(new URI(compact.getAbout().toString() + "/smallPreview"));
             compact.setSmallPreview(smallPreview);
+            
+            //Use the HTML representation of a change request as the large preview as well
+            final Preview largePreview = new Preview();
+            largePreview.setHintHeight("20em");
+            largePreview.setHintWidth("45em");
+            largePreview.setDocument(changeRequest.getAbout());
+            compact.setLargePreview(largePreview);
 
             return compact;
         }
