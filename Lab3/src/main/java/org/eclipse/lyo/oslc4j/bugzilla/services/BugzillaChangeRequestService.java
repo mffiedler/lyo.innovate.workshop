@@ -587,7 +587,7 @@ public class BugzillaChangeRequestService
 		} catch (Exception e) {
 			throw new WebApplicationException(e);
 		}
-        URI about = getAboutURI(productId + "/changeRequests/" + changeRequest.getIdentifier());
+        URI about = getAboutURI(productId + "/changeRequests/" + newChangeRequest.getIdentifier());
         newChangeRequest.setServiceProvider(ServiceProviderCatalogSingleton.getServiceProvider(httpServletRequest, productId).getAbout());
     	newChangeRequest.setAbout(about);
         setETagHeader(getETagFromChangeRequest(newChangeRequest), httpServletResponse);
