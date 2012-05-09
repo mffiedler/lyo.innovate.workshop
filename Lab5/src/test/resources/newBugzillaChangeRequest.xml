@@ -9,11 +9,9 @@
   <oslc_cm:ChangeRequest>
     <bugz:operatingSystem>Linux</bugz:operatingSystem>
     <rdf:type rdf:resource="http://open-services.net/ns/cm#BugzillaChangeRequest"/>
-    <oslc_cm:status>ASSIGNED</oslc_cm:status>
-    <dcterms:identifier>1</dcterms:identifier>
+    <oslc_cm:status>NEW</oslc_cm:status>
     <bugz:priority>---</bugz:priority>
-    <dcterms:created>2011-04-20T10:36:00.000-04:00</dcterms:created>
-    <dcterms:title>Enable integrations with all 3rd parties</dcterms:title>
+    <dcterms:title>New bug entered from OSLC Adapter</dcterms:title>
     <bugz:version>unspecified</bugz:version>
     <bugz:platform>PC</bugz:platform>
     <dcterms:contributor>
@@ -22,7 +20,6 @@
       </foaf:Person>
     </dcterms:contributor>
     <bugz:component>Server</bugz:component>
-    <dcterms:modified>2011-05-27T21:11:10.000-04:00</dcterms:modified>
     <oslc_cm:severity>Unclassified</oslc_cm:severity>
   </oslc_cm:ChangeRequest>
 </rdf:RDF>
