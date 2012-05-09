@@ -259,27 +259,32 @@ public class ServiceProviderCatalogSingleton
 			BugzillaConnector bc = BugzillaManager.getBugzillaConnector(httpServletRequest);
 
 			GetAccessibleProducts getProductIds = new GetAccessibleProducts();
-	        bc.executeMethod(getProductIds);
-	        Integer[] productIds = getProductIds.getIds();
+			if (bc != null)
+			{
+				bc.executeMethod(getProductIds);
+				Integer[] productIds = getProductIds.getIds();
 
-	        String basePath = BugzillaManager.getBugzServiceBase();
+				String basePath = BugzillaManager.getBugzServiceBase();
 	        
-	        for (Integer p : productIds) {
-		        String productId = Integer.toString(p);
+				for (Integer p : productIds) {
+					String productId = Integer.toString(p);
 		        	
-		        if (! serviceProviders.containsKey(productId)) {
+					if (! serviceProviders.containsKey(productId)) {
 		        		        
-		        	GetProduct getProductMethod = new GetProduct(p);
-	            	bc.executeMethod(getProductMethod);
-	            	String product = getProductMethod.getProduct().getName();
+						GetProduct getProductMethod = new GetProduct(p);
+						bc.executeMethod(getProductMethod);
+						String product = getProductMethod.getProduct().getName();
 	            	
 	            	
-		        	Map<String, Object> parameterMap = new HashMap<String, Object>();
-		        	parameterMap.put("productId",productId);
-		        	final ServiceProvider bugzillaServiceProvider = BugzillaServiceProviderFactory.createServiceProvider(basePath, product, parameterMap);
-		            registerServiceProvider(basePath,bugzillaServiceProvider,productId);
-	        	}
-	         }
+						Map<String, Object> parameterMap = new HashMap<String, Object>();
+						parameterMap.put("productId",productId);
+						final ServiceProvider bugzillaServiceProvider = BugzillaServiceProviderFactory.createServiceProvider(basePath, product, parameterMap);
+						registerServiceProvider(basePath,bugzillaServiceProvider,productId);
+					}
+				}
+			} else {
+				System.err.println("Bugzilla Connectorn not initialized - check bugz.properties");
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();

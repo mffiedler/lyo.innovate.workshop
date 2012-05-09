@@ -28,6 +28,7 @@ import java.util.Map;
 
 
 import org.eclipse.lyo.oslc4j.core.annotation.OslcDescription;
+import org.eclipse.lyo.oslc4j.core.annotation.OslcName;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcNamespace;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcOccurs;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcPropertyDefinition;
@@ -44,7 +45,10 @@ import com.j2bugzilla.base.BugFactory;
 import com.j2bugzilla.base.BugzillaException;
 import com.j2bugzilla.base.ConnectionException;
 
+
+//OSLC4J should give an rdf:type of oslc_cm:ChangeRequest
 @OslcNamespace(Constants.CHANGE_MANAGEMENT_NAMESPACE)
+@OslcName(Constants.CHANGE_REQUEST) 
 @OslcResourceShape(title = "Change Request Resource Shape", describes = Constants.TYPE_CHANGE_REQUEST)
 public final class BugzillaChangeRequest
        extends ChangeRequest

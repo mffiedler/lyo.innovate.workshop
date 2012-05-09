@@ -39,7 +39,7 @@ public interface Constants
     public static String BUGZILLA_NAMESPACE_PREFIX					 = "bugz";
 
 
-
+    public static String CHANGE_REQUEST             = "ChangeRequest";
     public static String TYPE_CHANGE_REQUEST        = CHANGE_MANAGEMENT_NAMESPACE + "ChangeRequest";
     public static String TYPE_CHANGE_SET            = SOFTWARE_CONFIGURATION_MANAGEMENT_NAMESPACE + "ChangeSet";
     public static String TYPE_DISCUSSION            = OslcConstants.OSLC_CORE_NAMESPACE + "Discussion";

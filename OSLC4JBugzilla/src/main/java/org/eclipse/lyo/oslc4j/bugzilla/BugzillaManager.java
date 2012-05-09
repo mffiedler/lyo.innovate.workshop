@@ -200,13 +200,19 @@ public class BugzillaManager implements ServletContextListener  {
 			}
 			int productId = Integer.parseInt(productIdString);
 			
-			final GetProduct getProducts = new GetProduct(productId); 
-			bc.executeMethod(getProducts);
-			final Product product = getProducts.getProduct();
+			final GetProduct getProducts = new GetProduct(productId);
+			
+			if (bc != null) {
+				
+				bc.executeMethod(getProducts);
+				final Product product = getProducts.getProduct();
 		
-			final BugSearch bugSearch = createBugSearch(page, limit, product);			
-			bc.executeMethod(bugSearch);
-			results = bugSearch.getSearchResults();
+				final BugSearch bugSearch = createBugSearch(page, limit, product);			
+				bc.executeMethod(bugSearch);
+				results = bugSearch.getSearchResults();
+			} else {
+				System.err.println("Bugzilla Connector not initialized - check bugz.properties");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new WebApplicationException(e);
