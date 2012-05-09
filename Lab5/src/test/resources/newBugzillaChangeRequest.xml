@@ -6,7 +6,7 @@
     xmlns:foaf="http://xmlns.com/foaf/0.1/"
     xmlns:dcterms="http://purl.org/dc/terms/"
     xmlns:oslc_cm="http://open-services.net/ns/cm#">
-  <oslc_cm:ChangeRequest rdf:about="http://oslc:8080/OSLC4JBugzilla/services/1/changeRequests/1">
+  <oslc_cm:ChangeRequest>
     <bugz:operatingSystem>Linux</bugz:operatingSystem>
     <rdf:type rdf:resource="http://open-services.net/ns/cm#BugzillaChangeRequest"/>
     <oslc_cm:status>ASSIGNED</oslc_cm:status>
