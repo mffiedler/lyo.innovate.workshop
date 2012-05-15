@@ -32,6 +32,7 @@ import net.oauth.OAuth;
 import net.oauth.OAuthException;
 import net.oauth.OAuthMessage;
 import net.oauth.OAuthProblemException;
+import net.oauth.http.HttpMessage;
 import net.oauth.server.OAuthServlet;
 
 import org.eclipse.lyo.oslc4j.bugzilla.BugzillaManager;
@@ -58,6 +59,8 @@ public class CredentialsFilter implements Filter {
 	
     public static final String CONNECTOR_ATTRIBUTE = "org.eclipse.lyo.oslc4j.bugzilla.BugzillaConnector";
     private static final String ADMIN_SESSION_ATTRIBUTE = "org.eclipse.lyo.oslc4j.bugzilla.AdminSession";
+    public static final String JAZZ_INVALID_EXPIRED_TOKEN_OAUTH_PROBLEM = "invalid_expired_token";
+    public static final String OAUTH_REALM = "Bugzilla";
 		
 	private static LRUCache<String, BugzillaConnector> keyToConnectorCache = new LRUCache<String, BugzillaConnector>(200);
 	
@@ -66,6 +69,8 @@ public class CredentialsFilter implements Filter {
 		
 
 	}
+	
+
 
 	/**
 	 * Check for OAuth or BasicAuth credentials and challenge if not found.
@@ -86,22 +91,31 @@ public class CredentialsFilter implements Filter {
 			
 				// First check if this is an OAuth request.
 				try {
-					OAuthMessage message = OAuthServlet.getMessage(request, null);
-					if (message.getToken() != null) {
-						OAuthRequest oAuthRequest = new OAuthRequest(request);
-						oAuthRequest.validate();
-						BugzillaConnector connector = keyToConnectorCache.get(message
-								.getToken());
-						if (connector == null) {
-							throw new OAuthProblemException(
-									OAuth.Problems.TOKEN_EXPIRED);
+					try {
+						OAuthMessage message = OAuthServlet.getMessage(request, null);
+						if (message.getToken() != null) {
+							OAuthRequest oAuthRequest = new OAuthRequest(request);
+							oAuthRequest.validate();
+							BugzillaConnector connector = keyToConnectorCache.get(message
+									.getToken());
+							if (connector == null) {
+								throw new OAuthProblemException(
+										OAuth.Problems.TOKEN_REJECTED);
+							}
+			
+							request.getSession().setAttribute(CONNECTOR_ATTRIBUTE, connector);
 						}
-		
-						request.getSession().setAttribute(CONNECTOR_ATTRIBUTE, connector);
+					} catch (OAuthProblemException e) {
+						if (OAuth.Problems.TOKEN_REJECTED.equals(e.getProblem()))
+							throwInvalidExpiredException(e);
+						else
+							throw e;
 					}
 				} catch (OAuthException e) {
-					HttpUtils.sendUnauthorizedResponse(response, new BugzillaOAuthException(e));
+					OAuthServlet.handleException(response, e, OAUTH_REALM);
+					return;
 				}
+                
 				
 				// This is not an OAuth request. Check for basic access authentication.
 				HttpSession session = request.getSession();
@@ -218,6 +232,20 @@ public class CredentialsFilter implements Filter {
 			e.printStackTrace();
 		}
 
+	}
+	
+	/**
+	 * Jazz requires a exception with the magic string "invalid_expired_token" to restart
+	 * OAuth authentication
+	 * @param e
+	 * @return
+	 * @throws OAuthProblemException 
+	 */
+	private void throwInvalidExpiredException(OAuthProblemException e) throws OAuthProblemException {
+		OAuthProblemException ope = new OAuthProblemException(JAZZ_INVALID_EXPIRED_TOKEN_OAUTH_PROBLEM);
+		ope.setParameter(HttpMessage.STATUS_CODE, new Integer(
+				HttpServletResponse.SC_UNAUTHORIZED));
+		throw ope;
 	}
 
 }
