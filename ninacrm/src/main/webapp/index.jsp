@@ -295,7 +295,7 @@ function handleMessage(message) {
 	
 function addLink(linkname, linkurl) {
     dojo.xhrPost( {  
-        url: "http://oslc.raleigh.ibm.com:8181/ninacrm/data",
+        url: "http://oslc:8181/ninacrm/data",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         postData: "linkname=" + linkname + "&linkurl=" + linkurl,
         load: function(data) {
