@@ -89,21 +89,29 @@ public class CredentialsFilter implements Filter {
 				/* LAB 6 Uncomment to enable OAuth validation
 
 				try {
-					OAuthMessage message = OAuthServlet.getMessage(request, null);
-					if (message.getToken() != null) {
-						OAuthRequest oAuthRequest = new OAuthRequest(request);
-						oAuthRequest.validate();
-						BugzillaConnector connector = keyToConnectorCache.get(message
-								.getToken());
-						if (connector == null) {
-							throw new OAuthProblemException(
-									OAuth.Problems.TOKEN_EXPIRED);
+					try {
+						OAuthMessage message = OAuthServlet.getMessage(request, null);
+						if (message.getToken() != null) {
+							OAuthRequest oAuthRequest = new OAuthRequest(request);
+							oAuthRequest.validate();
+							BugzillaConnector connector = keyToConnectorCache.get(message
+									.getToken());
+							if (connector == null) {
+								throw new OAuthProblemException(
+										OAuth.Problems.TOKEN_REJECTED);
+							}
+			
+							request.getSession().setAttribute(CONNECTOR_ATTRIBUTE, connector);
 						}
-		
-						request.getSession().setAttribute(CONNECTOR_ATTRIBUTE, connector);
+					} catch (OAuthProblemException e) {
+						if (OAuth.Problems.TOKEN_REJECTED.equals(e.getProblem()))
+							throwInvalidExpiredException(e);
+						else
+							throw e;
 					}
 				} catch (OAuthException e) {
-					HttpUtils.sendUnauthorizedResponse(response, new BugzillaOAuthException(e));
+					OAuthServlet.handleException(response, e, OAUTH_REALM);
+					return;
 				}
 				
 				*/
@@ -124,6 +132,8 @@ public class CredentialsFilter implements Filter {
 					} catch (UnauthorizedException e)
 					{
 						HttpUtils.sendUnauthorizedResponse(response, e);
+						System.err.println(e.getMessage());
+						return;
 					} catch (ConnectionException ce)
 					{
 						throw new ServletException(ce);

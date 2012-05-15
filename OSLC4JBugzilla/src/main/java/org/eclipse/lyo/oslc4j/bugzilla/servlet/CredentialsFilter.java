@@ -133,6 +133,8 @@ public class CredentialsFilter implements Filter {
 					} catch (UnauthorizedException e)
 					{
 						HttpUtils.sendUnauthorizedResponse(response, e);
+						System.err.println(e.getMessage());
+						return;
 					} catch (ConnectionException ce)
 					{
 						throw new ServletException(ce);
