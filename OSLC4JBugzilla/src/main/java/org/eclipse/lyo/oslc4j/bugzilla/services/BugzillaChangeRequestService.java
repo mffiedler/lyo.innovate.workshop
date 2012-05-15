@@ -268,7 +268,7 @@ public class BugzillaChangeRequestService
             final Preview largePreview = new Preview();
             largePreview.setHintHeight("20em");
             largePreview.setHintWidth("45em");
-            largePreview.setDocument(changeRequest.getAbout());
+            largePreview.setDocument(compact.getAbout());
             compact.setLargePreview(largePreview);
             return compact;
         }
@@ -411,8 +411,8 @@ public class BugzillaChangeRequestService
          title = "Change Request Creation Dialog",
          label = "Change Request Creation Dialog",
          uri = "/{productId}/changeRequests/creator",
-         hintWidth = "450px",
-         hintHeight = "300px",
+         hintWidth = "600px",
+         hintHeight = "450px",
          resourceTypes = {Constants.TYPE_CHANGE_REQUEST},
          usages = {OslcConstants.OSLC_USAGE_DEFAULT}
     )
@@ -462,7 +462,7 @@ public class BugzillaChangeRequestService
     @GET
     @Path("creator") 
     @Consumes({MediaType.WILDCARD})
-    public void addHtmlChangeRequest(@PathParam("productId") final String productId) throws IOException, ServletException
+    public void changeRequestCreator(@PathParam("productId") final String productId) throws IOException, ServletException
     {
     	try {				
 

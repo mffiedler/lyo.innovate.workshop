@@ -345,7 +345,7 @@ public class BugzillaChangeRequestService
     @GET
     @Path("creator") 
     @Consumes({MediaType.WILDCARD})
-    public void addHtmlChangeRequest(@PathParam("productId") final String productId) throws IOException, ServletException
+    public void changeRequestCreator(@PathParam("productId") final String productId) throws IOException, ServletException
     {
     	try {				
 
