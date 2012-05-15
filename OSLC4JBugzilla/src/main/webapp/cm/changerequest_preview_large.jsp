@@ -33,7 +33,7 @@ Date modifiedDate = (Date) changeRequest.getModified();
 String modified = formatter.format(modifiedDate);
 String component = changeRequest.getComponent();
 String identifier = changeRequest.getIdentifier()+""; 
-String description = changeRequest.getDescription();
+String opSys = changeRequest.getOperatingSystem();
 Person assigneePerson = (Person) changeRequest.getContributors().get(0);
 String assignee = "Unknown";
 if (assigneePerson != null)
@@ -58,7 +58,7 @@ URI: <a href="<%= bugUri %>"><%= bugUri %></a> <br/>
 Title: <%= title %><br/>
 Identifier: <%= identifier %><br/>
 Component: <%= component %> <br/>
-Description: <%= description %><br/>
+Operating System: <%= opSys %><br/>
 Created: <%= created %><br/>
 Assignee: <%= assignee %><br/>
 Last Modified: <%= modified %><br/>
