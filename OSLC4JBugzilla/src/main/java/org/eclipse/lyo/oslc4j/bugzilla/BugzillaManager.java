@@ -96,7 +96,6 @@ public class BugzillaManager implements ServletContextListener  {
     	String basePath=generateBasePath(servletContextEvent);
     	servletBase = basePath;
     	bugzServiceBase = basePath + BUGZ_SERVICE_PATH;
-    	OSLC4JUtils.setPublicURI("http://oslcbugz.raleigh.ibm.com/OSLC4JBugzilla");
     }
 
     /**
