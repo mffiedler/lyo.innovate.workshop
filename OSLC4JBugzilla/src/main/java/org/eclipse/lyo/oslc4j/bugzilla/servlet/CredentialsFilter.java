@@ -229,9 +229,9 @@ public class CredentialsFilter implements Filter {
 		try {
 			// For now, hard-code the consumers.
 			config.setConsumerStore(new RdfConsumerStore());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Throwable t) {
+			System.err.println("Error initializing the OAuth consumer store: " +  t.getMessage());
+		
 		}
 
 	}

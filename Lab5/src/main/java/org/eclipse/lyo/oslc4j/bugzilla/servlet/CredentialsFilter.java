@@ -228,9 +228,8 @@ public class CredentialsFilter implements Filter {
 		try {
 			// For now, hard-code the consumers.
 			config.setConsumerStore(new RdfConsumerStore());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Throwable t) {
+			//t.printStackTrace();
 		}
 
 	}

@@ -47,6 +47,8 @@ import org.eclipse.lyo.server.oauth.core.OAuthRequest;
 import org.eclipse.lyo.server.oauth.core.token.LRUCache;
 import org.eclipse.lyo.server.oauth.core.token.SimpleTokenStrategy;
 
+import sun.util.logging.resources.logging;
+
 import com.j2bugzilla.base.BugzillaConnector;
 import com.j2bugzilla.base.BugzillaException;
 import com.j2bugzilla.base.ConnectionException;
@@ -228,9 +230,9 @@ public class CredentialsFilter implements Filter {
 		try {
 			// For now, hard-code the consumers.
 			config.setConsumerStore(new RdfConsumerStore());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Throwable t) {
+			System.err.println("Error initializing the OAuth consumer store: " +  t.getMessage());
+		
 		}
 
 	}
