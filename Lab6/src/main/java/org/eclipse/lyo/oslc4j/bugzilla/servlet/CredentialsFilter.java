@@ -32,6 +32,7 @@ import net.oauth.OAuth;
 import net.oauth.OAuthException;
 import net.oauth.OAuthMessage;
 import net.oauth.OAuthProblemException;
+import net.oauth.http.HttpMessage;
 import net.oauth.server.OAuthServlet;
 
 import org.eclipse.lyo.oslc4j.bugzilla.BugzillaManager;
@@ -60,6 +61,8 @@ public class CredentialsFilter implements Filter {
 	
     public static final String CONNECTOR_ATTRIBUTE = "org.eclipse.lyo.oslc4j.bugzilla.BugzillaConnector";
     private static final String ADMIN_SESSION_ATTRIBUTE = "org.eclipse.lyo.oslc4j.bugzilla.AdminSession";
+    public static final String JAZZ_INVALID_EXPIRED_TOKEN_OAUTH_PROBLEM = "invalid_expired_token";
+    public static final String OAUTH_REALM = "Bugzilla";
 		
 	private static LRUCache<String, BugzillaConnector> keyToConnectorCache = new LRUCache<String, BugzillaConnector>(200);
 	
@@ -235,6 +238,20 @@ public class CredentialsFilter implements Filter {
 		
 		}
 
+	}
+	
+	/**
+	 * Jazz requires a exception with the magic string "invalid_expired_token" to restart
+	 * OAuth authentication
+	 * @param e
+	 * @return
+	 * @throws OAuthProblemException 
+	 */
+	private void throwInvalidExpiredException(OAuthProblemException e) throws OAuthProblemException {
+		OAuthProblemException ope = new OAuthProblemException(JAZZ_INVALID_EXPIRED_TOKEN_OAUTH_PROBLEM);
+		ope.setParameter(HttpMessage.STATUS_CODE, new Integer(
+				HttpServletResponse.SC_UNAUTHORIZED));
+		throw ope;
 	}
 
 }
