@@ -236,7 +236,7 @@ public class BugzillaChangeRequestService
      */
     @GET
     @Path("{changeRequestId}")
-    @Produces({OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML, OslcMediaType.APPLICATION_X_OSLC_COMPACT_JSON})
+    @Produces({OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML})
     public Compact getCompact(@PathParam("productId") final String productId,
                               @PathParam("changeRequestId") final String changeRequestId)
            throws URISyntaxException, IOException, ServletException
