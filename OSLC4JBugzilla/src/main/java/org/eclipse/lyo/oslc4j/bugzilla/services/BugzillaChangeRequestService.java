@@ -559,8 +559,7 @@ public class BugzillaChangeRequestService
     		out.print("{\"title\": \"" + getChangeRequestLinkLabel(newBug.getID(), summary) + "\"," +
     				"\"resource\" : \"" + about + "\"}");
     		out.close();
-    		//RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/cm/changerequest_created.jsp");
-    		//rd.forward(httpServletRequest, httpServletResponse);
+
     		
     	} catch (Exception e) {
     		e.printStackTrace();
