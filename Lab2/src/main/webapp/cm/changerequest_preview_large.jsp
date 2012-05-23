@@ -54,9 +54,9 @@ if (assigneePerson != null)
 </head>
 <body>
 
-<h2>Lab 2 not implemented yet</h2>	
+<h2>Lab 4 not implemented yet</h2>	
 
-<%-- LAB 2 Uncomment to create the large preview html document - simple HTML representation
+<%-- LAB 4 Uncomment to create the large preview html document - simple HTML representation
 
 Large Compact Preview<hr/>
 URI: <a href="<%= bugUri %>"><%= bugUri %></a> <br/>

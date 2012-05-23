@@ -227,9 +227,7 @@ public class BugzillaChangeRequestService
     }
 
     /**
-     * HTML representation for a single change request 
-     * 
-     * Forwards to changerequest_preview_large.jsp to build the html page
+     * HTML representation for a single change request  - redirect the request directly to Bugzilla
      * 
      * @param productId
      * @param changeRequestId
@@ -240,30 +238,12 @@ public class BugzillaChangeRequestService
 	@GET
 	@Path("{changeRequestId}")
 	@Produces({ MediaType.TEXT_HTML })
-	public void getHtmlChangeRequest(@PathParam("productId")       final String productId,
+	public Response getHtmlChangeRequest(@PathParam("productId")       final String productId,
 			                         @PathParam("changeRequestId") final String changeRequestId) throws ServletException, IOException, URISyntaxException
 	{	
-		final Bug bug = BugzillaManager.getBugById(httpServletRequest, changeRequestId);
-
-        if (bug != null) {
-        	BugzillaChangeRequest changeRequest = null;
-
-        	changeRequest = BugzillaChangeRequest.fromBug(bug);           
-        	changeRequest.setServiceProvider(ServiceProviderCatalogSingleton.getServiceProvider(httpServletRequest, productId).getAbout());
-        	changeRequest.setAbout(getAboutURI(productId + "/changeRequests/" + changeRequest.getIdentifier()));
-
-        	final String bugzillaUri = BugzillaManager.getBugzillaUri().toString();
-        	
-        	httpServletRequest.setAttribute("changeRequest", changeRequest);
-        	httpServletRequest.setAttribute("bugzillaUri", bugzillaUri);
-        	httpServletRequest.setAttribute("bugUri", bugzillaUri + "/show_bug.cgi?id=" + Integer.toString(bug.getID()));
-        	
-        	RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/cm/changerequest_preview_large.jsp");
-        	rd.forward(httpServletRequest,httpServletResponse);
-        }
-		
-		throw new WebApplicationException(Status.NOT_FOUND);
-		
+      String forwardUri = BugzillaManager.getBugzillaUri() + "show_bug.cgi?id=" + changeRequestId;
+  	  httpServletResponse.sendRedirect(forwardUri);
+      return Response.seeOther(new URI(forwardUri)).build();			
 	}
 
 	/**
@@ -520,6 +500,46 @@ public class BugzillaChangeRequestService
 		
         throw new WebApplicationException(Status.NOT_FOUND);
 			
+	}
+	
+	/**
+	 * OSLC large preview for a single change request
+	 * 
+	 * Forwards to changerequest_preview_large.jsp to build the html
+	 * 
+	 * @param productId
+	 * @param changeRequestId
+	 * @throws ServletException
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 */
+    @GET
+	@Path("{changeRequestId}/largePreview")
+	@Produces({ MediaType.TEXT_HTML })
+	public void getLargePreview(@PathParam("productId")       final String productId,
+			                         @PathParam("changeRequestId") final String changeRequestId) throws ServletException, IOException, URISyntaxException
+	{	
+		final Bug bug = BugzillaManager.getBugById(httpServletRequest, changeRequestId);
+
+      if (bug != null) {
+      	BugzillaChangeRequest changeRequest = null;
+
+      	changeRequest = BugzillaChangeRequest.fromBug(bug);           
+      	changeRequest.setServiceProvider(ServiceProviderCatalogSingleton.getServiceProvider(httpServletRequest, productId).getAbout());
+      	changeRequest.setAbout(getAboutURI(productId + "/changeRequests/" + changeRequest.getIdentifier()));
+
+      	final String bugzillaUri = BugzillaManager.getBugzillaUri().toString();
+      	
+      	httpServletRequest.setAttribute("changeRequest", changeRequest);
+      	httpServletRequest.setAttribute("bugzillaUri", bugzillaUri);
+      	httpServletRequest.setAttribute("bugUri", bugzillaUri + "/show_bug.cgi?id=" + Integer.toString(bug.getID()));
+      	
+      	RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/cm/changerequest_preview_large.jsp");
+      	rd.forward(httpServletRequest,httpServletResponse);
+      }
+		
+		throw new WebApplicationException(Status.NOT_FOUND);
+		
 	}
 	
 	

@@ -53,6 +53,10 @@ if (assigneePerson != null)
 <link rel="shortcut icon" href="<%= bugzillaUri %>/images/favicon.ico">
 </head>
 <body>
+<h2>Lab 4 not implemented yet</h2>	
+
+<%-- LAB 4 Uncomment to create the large preview html document - simple HTML representation
+
 Large Compact Preview<hr/>
 URI: <a href="<%= bugUri %>"><%= bugUri %></a> <br/>
 Title: <%= title %><br/>
@@ -62,5 +66,7 @@ Operating System: <%= opSys %><br/>
 Created: <%= created %><br/>
 Assignee: <%= assignee %><br/>
 Last Modified: <%= modified %><br/>
+
+--%>
 </body>
 </html>
