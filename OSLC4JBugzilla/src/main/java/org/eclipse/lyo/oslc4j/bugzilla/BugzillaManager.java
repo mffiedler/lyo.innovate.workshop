@@ -62,6 +62,7 @@ public class BugzillaManager implements ServletContextListener  {
 	private static final String BUGZ_SERVICE_PATH = "/services";
 	private static final String PROPERTY_SCHEME = BugzillaManager.class.getPackage().getName() + ".scheme";
     private static final String PROPERTY_PORT   = BugzillaManager.class.getPackage().getName() + ".port";
+    private static final String SYSTEM_PROPERTY_NAME_REGISTRY_URI = ServiceProviderRegistryURIs.class.getPackage().getName() + ".registryuri";
 
 
     private static final String HOST = getHost();
@@ -96,6 +97,7 @@ public class BugzillaManager implements ServletContextListener  {
     	String basePath=generateBasePath(servletContextEvent);
     	servletBase = basePath;
     	bugzServiceBase = basePath + BUGZ_SERVICE_PATH;
+    	System.setProperty(SYSTEM_PROPERTY_NAME_REGISTRY_URI, basePath + BUGZ_SERVICE_PATH + "/catalog/singleton");
     }
 
     /**
