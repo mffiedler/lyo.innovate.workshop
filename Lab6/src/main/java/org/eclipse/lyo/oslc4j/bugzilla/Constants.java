@@ -54,4 +54,6 @@ public interface Constants
     public static String PATH_CHANGE_REQUEST = "changeRequest";
 
     public static String USAGE_LIST = CHANGE_MANAGEMENT_NAMESPACE + "list";
+    
+    public static final String HDR_OSLC_VERSION = "OSLC-Core-Version";
 }

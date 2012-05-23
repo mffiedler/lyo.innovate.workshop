@@ -46,6 +46,7 @@ import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 import org.eclipse.lyo.oslc4j.core.model.OslcMediaType;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
 import org.eclipse.lyo.oslc4j.bugzilla.BugzillaManager;
+import org.eclipse.lyo.oslc4j.bugzilla.Constants;
 import org.eclipse.lyo.oslc4j.bugzilla.servlet.ServiceProviderCatalogSingleton;
 
 @OslcService(OslcConstants.OSLC_CORE_DOMAIN)
@@ -110,7 +111,7 @@ public class ServiceProviderCatalogService
         
         if (catalog != null) {
 
-        	httpServletResponse.addHeader("Oslc-Core-Version","2.0");
+        	httpServletResponse.addHeader(Constants.HDR_OSLC_VERSION,"2.0");
         	return catalog;
         }
         
