@@ -107,8 +107,8 @@ public class BugzillaChangeRequestService
              title = "Change Request Selection Dialog",
              label = "Change Request Selection Dialog",
              uri = "/{productId}/changeRequests/selector",
-             hintWidth = "450px",
-             hintHeight = "300px",
+             hintWidth = "525px",
+             hintHeight = "325px",
              resourceTypes = {Constants.TYPE_CHANGE_REQUEST},
              usages = {OslcConstants.OSLC_USAGE_DEFAULT}
         )
@@ -560,8 +560,8 @@ public class BugzillaChangeRequestService
          title = "Change Request Creation Dialog",
          label = "Change Request Creation Dialog",
          uri = "/{productId}/changeRequests/creator",
-         hintWidth = "450px",
-         hintHeight = "300px",
+         hintWidth = "600px",
+         hintHeight = "375px",
          resourceTypes = {Constants.TYPE_CHANGE_REQUEST},
          usages = {OslcConstants.OSLC_USAGE_DEFAULT}
     )
