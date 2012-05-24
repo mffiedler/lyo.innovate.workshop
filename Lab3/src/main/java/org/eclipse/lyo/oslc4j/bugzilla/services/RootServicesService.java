@@ -27,8 +27,6 @@ import org.eclipse.lyo.oslc4j.bugzilla.BugzillaManager;
 import org.eclipse.lyo.oslc4j.bugzilla.servlet.ServiceProviderCatalogSingleton;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
 
-
-
 /**
  * Jazz Root Services Service, see:
  *	https://jazz.net/wiki/bin/view/Main/RootServicesSpec
@@ -45,11 +43,9 @@ public class RootServicesService extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/* LAB 6
-        System.err.println("RootServices.doGET - Accept: " + request.getHeader("Accept"));
-        
         request.setAttribute("baseUri", BugzillaManager.getBugzServiceBase());
         request.setAttribute("catalogUri", ServiceProviderCatalogSingleton.getUri().toString());
-
+        request.setAttribute("oauthDomain", BugzillaManager.getServletBase());
 		final RequestDispatcher rd = request.getRequestDispatcher("/cm/rootservices_rdfxml.jsp"); 
 		rd.forward(request, response);
 		response.flushBuffer();

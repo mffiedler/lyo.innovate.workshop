@@ -19,6 +19,7 @@
 <%
 String baseUri = (String) request.getAttribute("baseUri");
 String catalogUri = (String) request.getAttribute("catalogUri");
+String oauthDomain = (String) request.getAttribute("oauthDomain");
 %>
 <!-- Jazz Root Services, see:
 	https://jazz.net/wiki/bin/view/Main/RootServicesSpec
@@ -39,7 +40,7 @@ String catalogUri = (String) request.getAttribute("catalogUri");
 	<dcterms:title>OSLC-CM Adapter/Bugzilla Jazz Root Services</dcterms:title>
 	<oslc_cm:cmServiceProviders rdf:resource="<%= catalogUri %>" />
 	<jfs:oauthRealmName>Bugzilla</jfs:oauthRealmName>
-	<jfs:oauthDomain><%= baseUri %></jfs:oauthDomain>
+	<jfs:oauthDomain><%= oauthDomain %></jfs:oauthDomain>
 	<jfs:oauthRequestConsumerKeyUrl rdf:resource="<%= baseUri + "/oauth/requestKey" %>" />
 	<jfs:oauthApprovalModuleUrl rdf:resource="<%= baseUri + "/oauth/approveKey" %>" />
 	<jfs:oauthRequestTokenUrl rdf:resource="<%= baseUri + "/oauth/requestToken" %>"/>
