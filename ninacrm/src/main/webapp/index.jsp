@@ -1,3 +1,19 @@
+<%--
+ Copyright (c) 2011, 2012 IBM Corporation.
+
+ All rights reserved. This program and the accompanying materials
+ are made available under the terms of the Eclipse Public License v1.0
+ and Eclipse Distribution License v. 1.0 which accompanies this distribution.
+ 
+ The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
+ and the Eclipse Distribution License is available at
+ http://www.eclipse.org/org/documents/edl-v10.php.
+ 
+ Contributors:
+ 
+    Dave Johnson	 - initial API and implementation
+    Michael Fiedler	 - adapted for OSLC4J Workshop
+--%>
 <html>
 <%@ page import="java.util.*, java.net.*" %>
 <head>
@@ -7,9 +23,9 @@
     <!-- ======================================================================
 	Dojo framework includes and requires
 	-->
-	<link rel="stylesheet" type="text/css" href="dojo.css">
-	<link rel="stylesheet" type="text/css" href="dijit/themes/tundra/tundra.css">
-	<script type="text/javascript" src="dojo/dojo.js" djConfig="parseOnLoad:true"></script>
+	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/resources/dojo.css">
+	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dijit/themes/tundra/tundra.css">
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.1/dojo/dojo.js" djConfig="parseOnLoad:true"></script>
 	<script type="text/javascript">
 		dojo.require("dojo.parser");
 	    dojo.require("dijit.Dialog");	
@@ -150,6 +166,7 @@ Code for OSLC UI Preview
 <script language="JavaScript">
 
 dojo.addOnLoad(addPreviewMouseOverHandlers);	
+var hostname ="oslc";
 
 function addPreviewMouseOverHandlers() {
    dojo.query("a").forEach(function(elem) {
@@ -162,7 +179,7 @@ function showPreview(elem) { // (1)
    var previewURI = elem.getAttribute("href"); // (2) 
    if (!previewURI) return;
    dojo.xhrGet({  // (3) 
-      url: "http://oslc:8181/ninacrm/proxy?uri=" + previewURI,
+      url: "http://"+hostname+":8181/ninacrm/proxy?uri=" + previewURI,
       handleAs:"xml",
       headers: {
          "Accept": "application/x-oslc-compact+xml", // (4) 
@@ -227,7 +244,6 @@ function firstChildNamed(e, nodeName) { // (4)
 Code for OSLC Delegated UI 
 */
 
-var hostname ="oslc";
 var createDialogURL = "http://" + hostname + ":8080/OSLC4JBugzilla/services/1/changeRequests/creator";
 var selectDialogURL = "http:////" + hostname + ":8080/OSLC4JBugzilla/services/1/changeRequests/selector";
 var returnURL       = "http:////" + hostname + ":8181/ninacrm/blank.html";
@@ -295,7 +311,7 @@ function handleMessage(message) {
 	
 function addLink(linkname, linkurl) {
     dojo.xhrPost( {  
-        url: "http://oslc:8181/ninacrm/data",
+        url: "http://"+hostname+":8181/ninacrm/data",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         postData: "linkname=" + linkname + "&linkurl=" + linkurl,
         load: function(data) {
